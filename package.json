@@ -1,5 +1,5 @@
 {
-  "name": "14-desafio-bd_sql",
+  "name": "deployRailway",
   "version": "1.0.0",
   "type": "module",
   "main": "server.js",
