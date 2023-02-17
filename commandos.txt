@@ -1,0 +1,94 @@
+//----------------------------------------------------------------------------------------------------------------//
+    Consigna:
+        Ejecutar el servidor (modos FORK y CLUSTER) con nodemon verificando el número de procesos tomados por node.
+
+    Respuesta:
+        * Puede ejecutar comandos nativos:
+            nodemon server.js
+            nodemon server.js -m CLUSTER
+
+        * Comandos package.json:
+            npm run fork-mode
+            npm run cluster-mode
+
+//----------------------------------------------------------------------------------------------------------------//
+
+    Consigna:
+        Ejecutar el servidor (con los parámetros adecuados) utilizando Forever, verificando su correcta operación.
+        Listar los procesos por Forever y por sistema operativo.
+
+    Respuesta:
+        forever start -w server.js
+        forever start -w server.js -p 8081 -m CLUSTER
+        forever list (procesos forever)
+        tasklist /fi "imagename eq node.exe" (procesos cmd)
+        forever stopall: detiene todos los procesos activos
+
+//----------------------------------------------------------------------------------------------------------------//
+
+    Consigna:
+        Ejecutar el servidor (con los parámetros adecuados: modo FORK) utilizando PM2 en sus modos modo fork y cluster.
+        Listar los procesos por PM2 y por sistema operativo.
+
+    Respuesta:
+        pm2 start server.js --name serverModoFork --watch
+        pm2 start server.js --watch -i max -- --p 8081
+        pm2 list (procesos pm2)
+        tasklist /fi "imagename eq node.exe" (procesos cmd)
+
+//----------------------------------------------------------------------------------------------------------------//
+
+    Consigna:
+        Hacer pruebas de finalización de procesos fork y cluster en los casos que corresponda.
+
+    Respuesta:
+        taskkill /pid <PID> /f
+
+  //--------------------------------------------------------------------------------------------------------------//
+ //                                          NGNIX                                                               //
+//--------------------------------------------------------------------------------------------------------------//
+
+    Consigna:
+        Redirigir todas las consultas a /api/randoms a un cluster de servidores escuchando en el puerto 8081.
+        El cluster será creado desde node utilizando el módulo nativo cluster.
+
+    Respuesta:
+        * Validar archivo ngnix_1.conf en carpeta ngnix_config_files. Ajustar y ejecutar (./nginx.exe -s reload) para
+          tomar cambios en archivo config.
+        * Como se pide módulo nativo de clustes se debe ejecutar:
+                node server.js --m CLUSTER --p 8081
+            Si desea usar pm2 o forever:
+                forever start server.js -p 8081 -m CLUSTER
+                pm2 start server.js --watch -i max -- --p 8081
+
+//----------------------------------------------------------------------------------------------------------------//
+
+    Consigna:
+        El resto de las consultas, redirigirlas a un servidor individual escuchando en el puerto 8080.
+
+    Respuesta:
+        * Como se pide módulo nativo de clustes se debe ejecutar:
+                node server.js
+            Si desea usar pm2 o forever:
+                forever start -w server.js
+                pm2 start server.js --name serverModoFork --watch
+
+//----------------------------------------------------------------------------------------------------------------//
+
+    Consigna:
+        Luego, modificar la configuración para que todas las consultas a /api/randoms sean redirigidas a un cluster de
+        servidores gestionado desde nginx, repartiéndolas equitativamente entre 4 instancias escuchando en los puertos
+        8082, 8083, 8084 y 8085 respectivamente.
+
+    Respuesta:
+        * Validar archivo ngnix_2.conf en carpeta ngnix_config_files. Ajustar y ejecutar (./nginx.exe -s reload) para
+          tomar cambios en archivo config.
+        * Ejecutar pm2 modo fork:
+            pm2 start server.js --name serverModoFork --watch
+        * Ejecutar pm2 modo cluster:
+            pm2 start server.js --watch -i max -- --p 8082
+            pm2 start server.js --watch -i max -- --p 8083
+            pm2 start server.js --watch -i max -- --p 8084
+            pm2 start server.js --watch -i max -- --p 8085
+
+//----------------------------------------------------------------------------------------------------------------//

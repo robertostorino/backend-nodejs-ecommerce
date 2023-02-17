@@ -1,0 +1,28 @@
+<div class="container my-5">
+    <div class="jumbotron bg-light d-flex justify-content-center flex-column align-items-center rounded">
+        <h1>Registro de Usuario</h1>
+        <br>
+        <form class="form" action="/register" method="post" roles="form" autocomplete="off">
+            <div class="form-group">
+                <input id="username" name="username" placeholder="Daniel" type="text" required>
+            </div>
+            <div class="form-group">
+                <input id="password" name="password" placeholder="mypassword" type="password" required>
+            </div>
+            <div class="form-group">
+                <input id="email" name="email" placeholder="user@email.com" type="email" required>
+            </div>
+            
+            <div class="form-group text-left">
+                <input class="btn btn-success my-3" type="submit" value="Register" />
+            </div>
+            
+        </form>
+
+        <hr>
+
+        <div class="text-left">
+            <button class="btn btn-success my-3 tertiary" onclick="location.href = '/login'">Ir al Login</button>
+        </div>
+    </div>
+</div>
