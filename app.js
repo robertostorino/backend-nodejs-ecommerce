@@ -89,11 +89,6 @@ export function startServer(port){
     //  Settings
     app.use('/static', express.static('/public')); // Mediante el middleware express.static, indico la ruta que tendrán mis ficheros estáticos
 
-    // const PORT = process.env.PORT||8080;
-
-    // httpServer.listen(PORT, () => {
-    //     console.log("Server online on: ", `${process.env.HOST}:${PORT}`)
-    // });
     httpServer.listen(port, () => {
         console.log("Server online on: ", `${process.env.HOST}:${port}`)
     });
